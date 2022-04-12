@@ -1,0 +1,28 @@
+ sklearn.datasets import load_wine
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+
+wine = load_wine()
+wine
+
+wine.data
+
+wine.target
+
+X_train,X_test,y_train,y_test = train_test_split(wine.data,wine.target,test_size=0.3,random_state=0)
+LR_model = LogisticRegression(C=0.1,max_iter=20,fit_intercept=True,n_jobs=4,solver='liblinear')
+
+LR_model.predict(X_test)
+
+score = LR_model.score(X_test,y_test)
+round(score,2)
+
+import pickle
+
+#creating a pickle file
+with open("pickle_wine_model.pkl","wb") as file:
+    pickle.dump(LR_model,file)
+
+#open a pickle file
+with open("pickle_wine_model.pkl","rb") as f:
+    pickled_model_file = pickle.load(f)
